@@ -63,6 +63,26 @@ front_page_ui <- fluidPage(
 
   * Bullet point 1
   * Bullet point 2
+  ### Learning the basics
+  This is some **Markdown** content on Page 1 with a line break.
+
+  * Bullet point 1
+  * Bullet point 2
+  ### Learning the basics
+  This is some **Markdown** content on Page 1 with a line break.
+
+  * Bullet point 1
+  * Bullet point 2
+  ### Learning the basics
+  This is some **Markdown** content on Page 1 with a line break.
+
+  * Bullet point 1
+  * Bullet point 2
+  ### Learning the basics
+  This is some **Markdown** content on Page 1 with a line break.
+
+  * Bullet point 1
+  * Bullet point 2
   ", fragment.only = TRUE))
 
   ),
