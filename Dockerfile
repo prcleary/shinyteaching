@@ -24,13 +24,10 @@ RUN R -e "install.packages(c('shiny', 'htmltools', 'markdown', 'DT', 'data.table
 # Copy your Shiny app into the container
 COPY app.R /srv/shiny-server/app.R
 
-# Set environment to avoid issues with locale
-ENV LANG en_GB.UTF-8
-ENV LC_ALL en_GB.UTF-8
-
 # Expose the Shiny server port (default is 3838)
 EXPOSE 3838
 
 # Run Shiny server
 USER shiny
-CMD Rscript /srv/shiny-server/app.R
+RUN sudo chown -R shiny:shiny /srv/shiny-server
+CMD ["/usr/bin/shiny-server.sh"]
