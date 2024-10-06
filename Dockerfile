@@ -30,3 +30,5 @@ EXPOSE 3838
 # Run Shiny server
 USER shiny
 CMD ["/usr/bin/shiny-server.sh"]
+ENTRYPOINT ["/usr/bin/shine-server.sh"]
+CMD ["--port=3838", "--host=0.0.0.0"]
