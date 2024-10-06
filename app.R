@@ -63,6 +63,12 @@ front_page_ui <- fluidPage(
 
   * Bullet point 1
   * Bullet point 2
+
+  To run this app on your own computer, run the following code in RStudio:
+  ```r
+  install.packages(c('shiny', 'htmltools', 'markdown', 'DT', 'data.table', 'bit64', 'readxl')
+  shiny::runGitHub('prcleary/shinyteaching')
+  ````
   ### Learning the basics
   This is some **Markdown** content on Page 1 with a line break.
 
