@@ -24,5 +24,5 @@ ENV LC_ALL en_GB.UTF-8
 EXPOSE 3838
 
 # Run Shiny server
-USER 998
+USER shiny
 CMD ["/usr/bin/shiny-server"]
