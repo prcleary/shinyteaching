@@ -25,9 +25,9 @@ RUN R -e "install.packages(c('shiny', 'htmltools', 'markdown', 'DT', 'data.table
 COPY app.R /srv/shiny-server/app.R
 
 # Expose the Shiny server port (default is 3838)
-EXPOSE 3838
+EXPOSE 7187
 
 # Run Shiny server
 USER shiny
 ENTRYPOINT ["/usr/bin/shiny-server.sh"]
-CMD ["--port=3838", "--host=0.0.0.0"]
+CMD ["--port=7187", "--host=0.0.0.0"]
