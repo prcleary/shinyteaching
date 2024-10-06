@@ -1,9 +1,8 @@
 # Use the rocker/shiny image as the base image
 FROM rocker/shiny:latest
-MAINTAINER Paul Cleary "paul.cleary@ukhsa.gov.uk"
 
 # Install additional Linux dependencies (if needed)
-RUN apt-get update -qq && apt-get install -y no-install-recommends \
+RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libcairo2-dev \
     libcurl4-openssl-dev \
