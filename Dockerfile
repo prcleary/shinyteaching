@@ -22,7 +22,7 @@ RUN apt-get update && \
 RUN R -e "install.packages(c('shiny', 'htmltools', 'markdown', 'DT', 'data.table', 'bit64'), repos='http://cran.rstudio.com/')"
 
 # Copy your Shiny app into the container
-COPY . /srv/shiny-server/
+COPY app.R /srv/shiny-server/app.R
 
 # Set environment to avoid issues with locale
 ENV LANG en_GB.UTF-8
@@ -33,4 +33,4 @@ EXPOSE 3838
 
 # Run Shiny server
 USER shiny
-CMD ["/usr/bin/shiny-server"]
+CMD Rscript /srv/shiny-server/app.R
