@@ -2,18 +2,16 @@
 FROM rocker/shiny:latest
 
 # Install additional Linux dependencies (if needed)
-RUN apt-get update && apt-get install -y \
+RUN apt-get update -qq && apt-get -y --no-install-recommends install \
     libxml2-dev \
     libcairo2-dev \
-    libcurl4-openssl-dev \
+    libsqlite3-dev \
     libmariadbd-dev \
     libpq-dev \
-    libsqlite3-dev \
     libssh2-1-dev \
+    unixodbc-dev \
+    libcurl4-openssl-dev \
     libssl-dev
-    libxml2-dev \
-    pandoc \
-    unixodbc-dev
 
 ## update system libraries
 RUN apt-get update && \
