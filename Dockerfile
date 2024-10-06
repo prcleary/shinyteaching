@@ -33,4 +33,4 @@ EXPOSE 3838
 
 # Run Shiny server
 USER shiny
-CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"]
+CMD ["/usr/bin/shiny-server"]
