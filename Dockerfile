@@ -22,12 +22,10 @@ RUN apt-get update && \
 RUN R -e "install.packages(c('shiny', 'htmltools', 'markdown', 'DT', 'data.table', 'bit64', 'readxl'), repos='http://cran.rstudio.com/')"
 
 # Copy your Shiny app into the container
-COPY app.R /srv/shiny-server/app.R
+COPY app.R /srv/shiny-server/
 
 # Expose the Shiny server port (default is 3838)
 EXPOSE 3838
 
 # Run Shiny server
-USER shiny
-ENTRYPOINT ["/usr/bin/shiny-server.sh"]
-CMD ["--port=3838", "--host=0.0.0.0"]
+CMD ["R", "-e", "shiny::runApp('/srv/shiny-server/app.R', host='0.0.0.0', port=3838)"]
