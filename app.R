@@ -49,7 +49,7 @@ custom_css <- "
   }
 "
 
-# Front page
+# Home
 front_page_ui <- fluidPage(
   titlePanel("Introduction to Shiny apps"),
   # h2("App Title", class = "large-font"),
@@ -194,8 +194,8 @@ ui <- fluidPage(
     id = "main_tabs",
     type = "tabs",
 
-    tabPanel("Front Page", front_page_ui),
-    tabPanel("Table of Contents", toc_ui),
+    tabPanel("Home", front_page_ui),
+    tabPanel("TOC", toc_ui),
     tabPanel("Page 1", page1_ui),
     tabPanel("Page 2", page2_ui),
     tabPanel("Page 3", page3_ui),
@@ -238,13 +238,13 @@ server <- function(input, output, session) {
 
   # Home button functionality
   observeEvent(input$home_btn, {
-    updateTabsetPanel(session, "main_tabs", selected = "Front Page")
+    updateTabsetPanel(session, "main_tabs", selected = "Home")
   })
 
   # Back and Forward button functionality
   observeEvent(input$back_btn, {
     current_tab <- input$main_tabs
-    tabs <- c("Front Page", "Table of Contents", "Page 1", "Page 2", "Page 3", "Embedded App", "File Upload")
+    tabs <- c("Home", "TOC", "Page 1", "Page 2", "Page 3", "Embedded App", "File Upload")
     current_index <- which(tabs == current_tab)
     if (current_index > 1) {
       updateTabsetPanel(session, "main_tabs", selected = tabs[current_index - 1])
@@ -253,7 +253,7 @@ server <- function(input, output, session) {
 
   observeEvent(input$forward_btn, {
     current_tab <- input$main_tabs
-    tabs <- c("Front Page", "Table of Contents", "Page 1", "Page 2", "Page 3", "Embedded App", "File Upload")
+    tabs <- c("Home", "TOC", "Page 1", "Page 2", "Page 3", "Embedded App", "File Upload")
     current_index <- which(tabs == current_tab)
     if (current_index < length(tabs)) {
       updateTabsetPanel(session, "main_tabs", selected = tabs[current_index + 1])
