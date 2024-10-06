@@ -23,7 +23,7 @@ RUN R -e "install.packages(c('shiny', 'htmltools', 'markdown', 'DT', 'data.table
 
 # Copy your Shiny app into the container
 COPY app.R /srv/shiny-server/
-COPY www /srv/shiny-server/
+COPY www /srv/shiny-server/www
 
 # Expose the Shiny server port (default is 3838)
 EXPOSE 3838
