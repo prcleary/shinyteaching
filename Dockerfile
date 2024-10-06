@@ -1,5 +1,6 @@
 # Use the rocker/shiny image as the base image
 FROM rocker/shiny:4.2.2
+MAINTAINER Paul Cleary <paul.cleary@ukhsa.gov.uk>
 
 # Install additional Linux dependencies (if needed)
 RUN apt-get update && apt-get install -y \
@@ -23,4 +24,5 @@ ENV LC_ALL en_GB.UTF-8
 EXPOSE 3838
 
 # Run Shiny server
+USER 998
 CMD ["/usr/bin/shiny-server"]
