@@ -19,7 +19,7 @@ RUN apt-get update && \
     apt-get clean
 
 # Install the R packages needed for the app
-RUN R -e "install.packages(c('shiny', 'htmltools', 'markdown', 'DT', 'data.table', 'bit64'), repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages(c('shiny', 'htmltools', 'markdown', 'DT', 'data.table', 'bit64', 'readxl'), repos='http://cran.rstudio.com/')"
 
 # Copy your Shiny app into the container
 COPY app.R /srv/shiny-server/app.R
