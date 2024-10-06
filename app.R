@@ -51,7 +51,7 @@ custom_css <- "
 
 # Front page
 front_page_ui <- fluidPage(
-  titlePanel("Introduction to Shiny"),
+  titlePanel("Introduction to Shiny apps"),
   # h2("App Title", class = "large-font"),
   p("Paul Cleary", class = "medium-font"),
   p("October 9, 2024", class = "medium-font"),
@@ -69,7 +69,7 @@ front_page_ui <- fluidPage(
   column(6,
   HTML(markdown::markdownToHTML(text = "
   ### Learning the basics
-  This is some **Markdown** content on Page 1 with a line break.
+  Here is some more **Markdown** content on Page 1 with a line break.
 
   * Bullet point 1
   * Bullet point 2
@@ -80,7 +80,7 @@ front_page_ui <- fluidPage(
 
 # Define UI for Table of Contents
 toc_ui <- fluidPage(
-  titlePanel("Table of Contents"),
+  titlePanel("TOC"),
   p("Click on any section below to navigate directly."),
   tags$ul(
     tags$li(actionLink("toc_page1", "Page 1: Text Input")),
