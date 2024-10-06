@@ -29,5 +29,4 @@ EXPOSE 3838
 
 # Run Shiny server
 USER shiny
-RUN sudo chown -R shiny:shiny /srv/shiny-server
 CMD ["/usr/bin/shiny-server.sh"]
