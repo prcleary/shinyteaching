@@ -93,7 +93,9 @@ front_page_ui <- fluidPage(
 
   * Bullet point 1
   * Bullet point 2
-  ", fragment.only = TRUE))
+  ", fragment.only = TRUE)),
+  tags$img(src = "img/webapps01.svg",
+           style = "width: 100%; height: auto;")  # Adjust URL to your image
          )
            )
 )
