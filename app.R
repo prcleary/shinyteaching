@@ -61,14 +61,12 @@ front_page_ui <- fluidPage(
   This site just includes some simple Shiny apps for demonstration purposes.
 
   To run this app on your own computer, run the following code in RStudio:
+
   ```r
   install.packages(c('shiny', 'htmltools', 'markdown', 'DT', 'data.table', 'bit64', 'readxl'))
   shiny::runGitHub('prcleary/shinyteaching')
   ````
   ", fragment.only = TRUE))
-
-
-
 )
 
 toc_ui <- fluidPage(
@@ -76,9 +74,9 @@ toc_ui <- fluidPage(
   p("Click on any section below to navigate directly."),
   tags$ul(
     tags$li(actionLink("toc_nothing", "Nothing app")),
-    tags$li(actionLink("toc_page1", "Page 1: Text Input")),
-    tags$li(actionLink("toc_page2", "Page 2: Numeric Input")),
-    tags$li(actionLink("toc_page3", "Page 3: Select Input"))#,
+    tags$li(actionLink("toc_text", "Text Input and Output")),
+    tags$li(actionLink("toc_numbers", "Numbers")),
+    tags$li(actionLink("toc_dropdowns", "Dropdowns"))#,
     # tags$li(actionLink("toc_embedded_app", "Embedded App")),
     # tags$li(actionLink("toc_file_upload", "File Upload & Editable Table"))
   )
@@ -86,6 +84,8 @@ toc_ui <- fluidPage(
 
 nothing_ui <- fluidPage(
   h2("Nothing app"),
+  h3("Frontend (nothing)"),
+  h3("Code"),
     HTML(markdown::markdownToHTML(text = "
   ```r
   library(shiny)
@@ -100,21 +100,37 @@ nothing_ui <- fluidPage(
   ", fragment.only = TRUE))
 )
 
-page1_ui <- fluidPage(
-  h2("Page 1: Text Input"),
-  HTML(markdown::markdownToHTML(text = "
-  ### Markdown Section for Page 1
-  This is some **Markdown** content on Page 1 with a line break.
-
-  * Bullet point 1
-  * Bullet point 2
-  ", fragment.only = TRUE)),
+text_ui <- fluidPage(
+  h2("Text Input and Output"),
+  h3("Frontend"),
   textInput("textinput", "Enter some text:"),
-  verbatimTextOutput("textoutput")
+  verbatimTextOutput("textoutput"),
+  h3("Code"),
+  HTML(
+    markdown::markdownToHTML(
+      text = "
+  ```r
+  library(shiny)
+  ui <- fluidPage(textInput('textinput', 'Enter some text:'),
+                  verbatimTextOutput('textoutput')
+  )
+  server <- function(input, output) {
+    output$textoutput <- renderText({
+      paste('You entered:', input$textinput)
+    })
+  }
+  shinyApp(ui = ui, server = server)
+  ````
+  ",
+      fragment.only = TRUE
+    )
+  )
 )
 
-page2_ui <- fluidPage(
-  titlePanel("Page 2: Numeric Input"),
+numbers_ui <- fluidPage(
+  h2("Numbers"),
+  h3("Frontend"),
+  titlePanel("Numbers"),
   sidebarLayout(
     sidebarPanel(
       numericInput("num_input", "Enter a number:", value = 10, min = 0, max = 100)
@@ -122,17 +138,69 @@ page2_ui <- fluidPage(
     mainPanel(
       textOutput("num_output")
     )
+  ),
+  h3("Code"),
+  HTML(
+    markdown::markdownToHTML(
+      text = "
+  ```r
+  library(shiny)
+  ui <- fluidPage(titlePanel('Numbers'),
+                  sidebarLayout(sidebarPanel(
+                    numericInput(
+                      'num_input',
+                      'Enter a number:',
+                      value = 10,
+                      min = 0,
+                      max = 100
+                    )
+                  ),
+                  mainPanel(textOutput('num_output'))))
+  server <- function(input, output) {
+    output$num_output <- renderText({
+      paste('You selected the number:', input$num_input)
+    })
+  }
+  shinyApp(ui = ui, server = server)
+  ````
+  ",
+      fragment.only = TRUE
+    )
   )
 )
 
-page3_ui <- fluidPage(
-  titlePanel("Page 3: Select Input"),
+dropdowns_ui <- fluidPage(
+  titlePanel("Dropdowns"),
+  h3("Frontend"),
   sidebarLayout(
     sidebarPanel(
       selectInput("select_input", "Choose an option:", choices = c("Option 1", "Option 2", "Option 3"))
     ),
     mainPanel(
       textOutput("select_output")
+    )
+  ),
+  h3("Code"),
+  HTML(
+    markdown::markdownToHTML(
+      text = "
+  ```r
+  library(shiny)
+  ui <- sidebarLayout(sidebarPanel(selectInput(
+    'select_input',
+    'Choose an option:',
+    choices = c('Option 1', 'Option 2', 'Option 3')
+  )),
+                      mainPanel(textOutput('select_output')))
+  server <- function(input, output) {
+    output$select_output <- renderText({
+      paste('You chose:', input$select_input)
+    })
+  }
+  shinyApp(ui = ui, server = server)
+  ````
+  ",
+      fragment.only = TRUE
     )
   )
 )
@@ -174,13 +242,12 @@ ui <- fluidPage(
   tabsetPanel(
     id = "main_tabs",
     type = "tabs",
-
     tabPanel("Home", front_page_ui),
     tabPanel("TOC", toc_ui),
     tabPanel("Nothing app", nothing_ui),
-    tabPanel("Page 1", page1_ui),
-    tabPanel("Page 2", page2_ui),
-    tabPanel("Page 3", page3_ui)  #,
+    tabPanel("Text Input and Output", text_ui),
+    tabPanel("Numbers", numbers_ui),
+    tabPanel("Dropdowns", dropdowns_ui)  #,
     # tabPanel("Embedded App", embedded_app_ui),
     # tabPanel("File Upload", file_upload_ui)
   ),
@@ -195,16 +262,16 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
 
-  observeEvent(input$toc_page1, {
-    updateTabsetPanel(session, "main_tabs", selected = "Page 1")
+  observeEvent(input$toc_text, {
+    updateTabsetPanel(session, "main_tabs", selected = "Text Input and Output")
   })
 
-  observeEvent(input$toc_page2, {
-    updateTabsetPanel(session, "main_tabs", selected = "Page 2")
+  observeEvent(input$toc_numbers, {
+    updateTabsetPanel(session, "main_tabs", selected = "Numbers")
   })
 
-  observeEvent(input$toc_page3, {
-    updateTabsetPanel(session, "main_tabs", selected = "Page 3")
+  observeEvent(input$toc_dropdowns, {
+    updateTabsetPanel(session, "main_tabs", selected = "Dropdowns")
   })
 
   # observeEvent(input$toc_embedded_app, {
@@ -221,7 +288,7 @@ server <- function(input, output, session) {
 
   observeEvent(input$back_btn, {
     current_tab <- input$main_tabs
-    tabs <- c("Home", "TOC", "Nothing app", "Page 1", "Page 2", "Page 3")  #, "Embedded App", "File Upload")
+    tabs <- c("Home", "TOC", "Nothing app", "Text Input and Output", "Numbers", "Dropdowns")  #, "Embedded App", "File Upload")
     current_index <- which(tabs == current_tab)
     if (current_index > 1) {
       updateTabsetPanel(session, "main_tabs", selected = tabs[current_index - 1])
@@ -230,7 +297,7 @@ server <- function(input, output, session) {
 
   observeEvent(input$forward_btn, {
     current_tab <- input$main_tabs
-    tabs <- c("Home", "TOC", "Nothing app", "Page 1", "Page 2", "Page 3") #, "Embedded App", "File Upload")
+    tabs <- c("Home", "TOC", "Nothing app", "Text Input and Output", "Numbers", "Dropdowns") #, "Embedded App", "File Upload")
     current_index <- which(tabs == current_tab)
     if (current_index < length(tabs)) {
       updateTabsetPanel(session, "main_tabs", selected = tabs[current_index + 1])
