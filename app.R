@@ -144,8 +144,7 @@ numbers_ui <- fluidPage(
       text = "
   ```r
   library(shiny)
-  ui <- fluidPage(titlePanel('Numbers'),
-                  sidebarLayout(sidebarPanel(
+  ui <- fluidPage(sidebarLayout(sidebarPanel(
                     numericInput(
                       'num_input',
                       'Enter a number:',
