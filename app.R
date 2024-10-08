@@ -130,7 +130,6 @@ text_ui <- fluidPage(
 numbers_ui <- fluidPage(
   h2("Numbers"),
   h3("Frontend"),
-  titlePanel("Numbers"),
   sidebarLayout(
     sidebarPanel(
       numericInput("num_input", "Enter a number:", value = 10, min = 0, max = 100)
@@ -261,6 +260,10 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
+
+  observeEvent(input$toc_nothing, {
+    updateTabsetPanel(session, "main_tabs", selected = "Nothing app")
+  })
 
   observeEvent(input$toc_text, {
     updateTabsetPanel(session, "main_tabs", selected = "Text Input and Output")
